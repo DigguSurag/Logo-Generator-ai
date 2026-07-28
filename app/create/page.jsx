@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
+import { Suspense } from "react";
 import LogoTitle from './_components/LogoTitle'
 import LogoDesc from './_components/LogoDesc'
 import LogoPalette from './_components/LogoPalette'
@@ -24,25 +25,25 @@ function CreateLogo() {
 
   useEffect(() => {
 
-  const storedData =
-    localStorage.getItem("logo-form-data");
+    const storedData =
+      localStorage.getItem("logo-form-data");
 
-  const storedStep =
-    localStorage.getItem("logo-current-step");
+    const storedStep =
+      localStorage.getItem("logo-current-step");
 
-  if (storedData) {
+    if (storedData) {
 
-    setFormData(JSON.parse(storedData));
+      setFormData(JSON.parse(storedData));
 
-  }
+    }
 
-  if (storedStep) {
+    if (storedStep) {
 
-    setStep(Number(storedStep));
+      setStep(Number(storedStep));
 
-  }
+    }
 
-}, []);
+  }, []);
 
   const onHandleInputChange = (
     field,
@@ -98,16 +99,17 @@ function CreateLogo() {
         {/* STEP 1 */}
 
         {step === 1 ? (
-
-          <LogoTitle
-            onHandleInputChange={(v) =>
-              onHandleInputChange(
-                'title',
-                v
-              )
-            }
-            formData={formData}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <LogoTitle
+              onHandleInputChange={(v) =>
+                onHandleInputChange(
+                  'title',
+                  v
+                )
+              }
+              formData={formData}
+            />
+          </Suspense>
 
         ) :
 
